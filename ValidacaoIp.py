@@ -1,10 +1,12 @@
+from collections import OrderedDict
+
 vetorA = []
 vetorB = []
 vetorC = []
 
 
 def readFile():
-    nome_arquivo = "C:\\Users\\Danie\\enderecoIp.txt"
+    nome_arquivo = "C:\\Users\\Aluno\\enderecoIp.txt"
 
     f = open(nome_arquivo, 'r')
     texto = f.readlines()
@@ -12,7 +14,7 @@ def readFile():
 
 
 def createFile(texto):
-    nome_arquivo = "C:\\Users\\Danie\\relatorioIps.txt"
+    nome_arquivo = "C:\\Users\\Aluno\\relatorioIps.txt"
     f = open(nome_arquivo, 'w+')
     for i in range(len(texto)):
         f.write(texto[i])
@@ -73,6 +75,21 @@ def ipClassC(texto):
     return vetorC
 
 
+def remove_repetidos(l):
+
+    lista = l
+    i = 0
+    while i < len(lista):
+        j = i + 1
+        while j < len(lista):
+            if lista[j] == lista[i]:
+                del(lista[j])
+            else:
+                j = j + 1
+        i = i + 1
+
+    return sorted(lista)
+
 def validation(texto):
     vetorA = ipClassA(texto)
     vetorB = ipClassB(texto)
@@ -110,27 +127,25 @@ def validation(texto):
                 if len(vetorAux) == 0:
                     vetorAux.append(e)
                 elif len(vetorAux) > 0:
-                    if e != vetorAux[e]:
-
                         vetorAux.append(e)
                 continue
             else:
                 continue
 
-    print(vetorAux)
-    print(vetorinvalid)
-
     if len(vetorAux) > 0:
-        for i in range(len(vetorAux)):
-            for a in range(len(vetorAux)):
-                if vetorAux[i] == vetorAux[a]:
-                    vetorAux = vetorAux.remove(vetorAux[a])
+        vetorAux = remove_repetidos(vetorAux)
 
-        for t in range(len(vetorAux)):
-            print("a")
-            #vetorinvalid.remove(vetorinvalid[vetorAux[t]])
-
-    print(vetorAux)
+    for i in range(len(vetorAux)):
+        j = i
+        if i == 0:
+            vetorinvalid.remove((vetorinvalid[vetorAux[j]]))
+        elif i > 0:
+            index = 0
+            if vetorAux[i] > 1:
+                index = (vetorAux[i] - i)
+            else:
+                index = vetorAux[i]
+            vetorinvalid.remove((vetorinvalid[index]))
 
     text.append("[Enderecos Válidos:]\n")
     for w in range(len(vetorValid)):
